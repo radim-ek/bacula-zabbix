@@ -85,12 +85,12 @@ Link this Zabbix template to each host that has a Bacula's backup job implemente
 
 ### Installation
 
-*Note*: If your Bacula uses a config path other than `/etc/bacula` (e.g., Bacula.org builds use `/opt/bacula/etc`), you should set the valid path to `bacula-zabbix.conf` in `bacula-zabbix.bash`.
+*Note*: If your Bacula uses a config path other than `/opt/bacula/etc` (e.g., Bacula.org builds use `/etc/bacula`), you should set the valid path to `bacula-zabbix.conf` in `bacula-zabbix.bash`.
 
-1. Create the configuration file `/etc/bacula/bacula-zabbix.conf` as the sample in this repository, customize it for your infrastructure environment, and set the permissions as below:
+1. Create the configuration file `/opt/bacula/etc/bacula-zabbix.conf` as the sample in this repository, customize it for your infrastructure environment, and set the permissions as below:
   ```
-  chown root:bacula /etc/bacula/bacula-zabbix.conf
-  chmod 640 /etc/bacula/bacula-zabbix.conf
+  chown root:bacula /opt/bacula/etc/bacula-zabbix.conf
+  chmod 640 /opt/bacula/etc/bacula-zabbix.conf
   ```
 
 2. Create the bash script file `/var/spool/bacula/bacula-zabbix.bash` by copying it from this repository and set the permissions as below:
@@ -99,7 +99,7 @@ Link this Zabbix template to each host that has a Bacula's backup job implemente
   chmod 700 /var/spool/bacula/bacula-zabbix.bash
   ```
 
-3. Edit the Bacula Director configuration file `/etc/bacula/bacula-dir.conf` to start the script at the finish of each job. To do this you need to change the lines described below in the Messages resource that is used by all the configured jobs:
+3. Edit the Bacula Director configuration file `/opt/bacula/etc/bacula-dir.conf` to start the script at the finish of each job. To do this you need to change the lines described below in the Messages resource that is used by all the configured jobs:
   ```
   Messages {
     ...
@@ -121,9 +121,17 @@ then it is necessary to use and external script like the bacula-sender.bash scri
   ```
 The file is setup to work with the example mail command from above. Change the Messages mailcommand to
   ```
+  # Via arquivo bacula-dir.conf
   mailcommand = "/var/spool/bacula/bacula-sender.bash \"%t\" \"%e\" \"%c\" \"%n\" \"%l\" \"%r\" \"%i\""
   ```
-and leave everthing else the same.
+
+Note that if you edit the message via Baculum WEB(Prefered and no restart needed) you should use whitoud "\":
+  ```
+  # Via WEB:
+  mailcommand = "/var/spool/bacula/bacula-sender.bash "%t" "%e" "%c" "%n" "%l" "%r" "%i""
+  ```
+
+and leave everything else the same.
 
 4. Now restart the Bacula Director service. In my case I used this command:
   ```
@@ -133,6 +141,12 @@ and leave everthing else the same.
 5. Make a copy of the Zabbix template from this repository and import it to your Zabbix server.
 
 6. Edit your hosts that have configured backup jobs to use this template. Don't forget to edit the variables with the Bacula's processes names, and to disable in hosts that are only Bacula's clients the items that check the Bacula Director and Storage processes.
+
+# Troubleshooting Commands:
+- `tail -f /var/log/syslog`
+- `tail -f /var/log/bacula/bacula-zabbix.log`
+- `docker logs -f zabbix-snmptraps-1 -n 100`
+- `/var/log/zabbix/zabbix_server.log`
 
 ### References
 
