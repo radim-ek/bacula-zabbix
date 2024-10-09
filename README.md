@@ -114,14 +114,14 @@ For example if the original mailcommand was:
   ```
   mailcommand = "/usr/sbin/bsmtp -h localhost -f \"\(Bacula\) \<bacula@backup-bacula.tokyo.tequila.jp\>\" -s \"Bacula: %t %e of %c (%n) %l\" %r"
   ```
-then it is necessary to use and external script like the bacula-sender.sh script provided. Put the file into /var/spool/bacula/ and set the permissions as below:
+then it is necessary to use and external script like the bacula-sender.bash script provided. Put the file into /var/spool/bacula/ and set the permissions as below:
   ```
   chown bacula:bacula /var/spool/bacula/bacula-sender.bash
   chmod 700 /var/spool/bacula/bacula-sender.bash
   ```
 The file is setup to work with the example mail command from above. Change the Messages mailcommand to
   ```
-  mailcommand = "/var/spool/bacula/bacula-sender.sh \"%t\" \"%e\" \"%c\" \"%n\" \"%l\" \"%r\" \"%i\""
+  mailcommand = "/var/spool/bacula/bacula-sender.bash \"%t\" \"%e\" \"%c\" \"%n\" \"%l\" \"%r\" \"%i\""
   ```
 and leave everthing else the same.
 
