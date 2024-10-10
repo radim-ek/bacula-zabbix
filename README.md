@@ -142,6 +142,24 @@ and leave everything else the same.
 
 6. Edit your hosts that have configured backup jobs to use this template. Don't forget to edit the variables with the Bacula's processes names, and to disable in hosts that are only Bacula's clients the items that check the Bacula Director and Storage processes.
 
+### New Features:
+- alert when there is action need for labeling media
+- monitor running jobs
+- alert monitor jobs when they shouldn't be running
+
+7. Put the files into /var/spool/bacula/ and set the permissions as below:
+```
+chmod +x /var/spool/bacula/bacula-label-zabbix-sender.bash
+chmod +x /var/spool/bacula/bacula-running-zabbix-sender.bash
+```
+
+8. Create a cron to run and send the data to Zabbix:
+The bellow example is running every 10 minutes
+```
+*/10 * * * * /var/spool/bacula/bacula-label-zabbix-sender.bash
+*/10 * * * */var/spool/bacula/bacula-running-zabbix-sender.bash
+```
+
 # Troubleshooting Commands:
 - `tail -f /var/log/syslog`
 - `tail -f /var/log/bacula/bacula-zabbix.log`
