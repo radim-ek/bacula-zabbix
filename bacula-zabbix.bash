@@ -73,37 +73,37 @@ echo "[$baculaJobId] Client Name: ${baculaClientName}" | ${LOG} > /dev/null
 return=0
 
 # Send Job exit status to Zabbix server
-$zabbixSender -z $zabbixServer -c $zabbixAgentConfig -k "bacula.$level.job.status" -o $status >/dev/null 2>&1
+$zabbixSender -z $zabbixServer -s $baculaClientName -c $zabbixAgentConfig -k "bacula.$level.job.status" -o $status >/dev/null 2>&1
 if [ $? -ne 0 ] ; then return=$(($return+1)) ; fi
 
 # Get from database the number of bytes transferred by the Job and send it to Zabbix server
 baculaJobBytes=$($sql "select JobBytes from Job where JobId=$baculaJobId;" 2>/dev/null)
 echo "[$baculaJobId] Job Bytes: ${baculaJobBytes}" | ${LOG} > /dev/null
-$zabbixSender -z $zabbixServer -c $zabbixAgentConfig -k "bacula.$level.job.bytes" -o $baculaJobBytes >/dev/null 2>&1
+$zabbixSender -z $zabbixServer -s $baculaClientName -c $zabbixAgentConfig -k "bacula.$level.job.bytes" -o $baculaJobBytes >/dev/null 2>&1
 if [ $? -ne 0 ] ; then return=$(($return+2)) ; fi
 
 # Get from database the number of files transferred by the Job and send it to Zabbix server
 baculaJobFiles=$($sql "select JobFiles from Job where JobId=$baculaJobId;" 2>/dev/null)
 echo "[$baculaJobId] Job Files: ${baculaJobFiles}" | ${LOG} > /dev/null
-$zabbixSender -z $zabbixServer -c $zabbixAgentConfig -k "bacula.$level.job.files" -o $baculaJobFiles >/dev/null 2>&1
+$zabbixSender -z $zabbixServer -s $baculaClientName -c $zabbixAgentConfig -k "bacula.$level.job.files" -o $baculaJobFiles >/dev/null 2>&1
 if [ $? -ne 0 ] ; then return=$(($return+4)) ; fi
 
 # Get from database the time spent by the Job and send it to Zabbix server
 baculaJobTime=$($sql "select ${timestampdiff} from Job where JobId=$baculaJobId;" 2>/dev/null)
 echo "[$baculaJobId] Job Time: ${baculaJobTime}" | ${LOG} > /dev/null
-$zabbixSender -z $zabbixServer -c $zabbixAgentConfig -k "bacula.$level.job.time" -o $baculaJobTime >/dev/null 2>&1
+$zabbixSender -z $zabbixServer -s $baculaClientName -c $zabbixAgentConfig -k "bacula.$level.job.time" -o $baculaJobTime >/dev/null 2>&1
 if [ $? -ne 0 ] ; then return=$(($return+8)) ; fi
 
 # Get Job speed from database and send it to Zabbix server
 baculaJobSpeed=$($sql "select ${speed} from Job where JobId=$baculaJobId;" 2>/dev/null)
 echo "[$baculaJobId] Job Speed: ${baculaJobSpeed}" | ${LOG} > /dev/null
-$zabbixSender -z $zabbixServer -c $zabbixAgentConfig -k "bacula.$level.job.speed" -o $baculaJobSpeed >/dev/null 2>&1
+$zabbixSender -z $zabbixServer -s $baculaClientName -c $zabbixAgentConfig -k "bacula.$level.job.speed" -o $baculaJobSpeed >/dev/null 2>&1
 if [ $? -ne 0 ] ; then return=$(($return+16)) ; fi
 
 # Get Job compression rate from database and send it to Zabbix server
 baculaJobCompr=$($sql "select ${compression} from Job where JobId=$baculaJobId;" 2>/dev/null)
 echo "[$baculaJobId] Job Compression: ${baculaJobCompr}" | ${LOG} > /dev/null
-$zabbixSender -z $zabbixServer -c $zabbixAgentConfig -k "bacula.$level.job.compr" -o $baculaJobCompr >/dev/null 2>&1
+$zabbixSender -z $zabbixServer -s $baculaClientName -c $zabbixAgentConfig -k "bacula.$level.job.compr" -o $baculaJobCompr >/dev/null 2>&1
 if [ $? -ne 0 ] ; then return=$(($return+32)) ; fi
 
 echo "[$baculaJobId] END@ $(date +"%F %T") RETURN: ${return}" | ${LOG} > /dev/null
