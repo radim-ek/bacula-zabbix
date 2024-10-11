@@ -157,7 +157,7 @@ chmod +x /var/spool/bacula/bacula-running-zabbix-sender.bash
 The bellow example is running every 10 minutes
 ```
 */10 * * * * /var/spool/bacula/bacula-label-zabbix-sender.bash
-*/10 * * * */var/spool/bacula/bacula-running-zabbix-sender.bash
+*/10 * * * * /var/spool/bacula/bacula-running-zabbix-sender.bash
 ```
 
 # Troubleshooting Commands:
