@@ -125,7 +125,7 @@ The file is setup to work with the example mail command from above. Change the M
   mailcommand = "/var/spool/bacula/bacula-sender.bash \"%t\" \"%e\" \"%c\" \"%n\" \"%l\" \"%r\" \"%i\""
   ```
 
-Note that if you edit the message via Baculum WEB(Prefered and no restart needed) you should use whitoud "\":
+Note that if you edit the message via Baculum WEB(Prefered and no restart needed) you should use without "\":
   ```
   # Via WEB:
   mailcommand = "/var/spool/bacula/bacula-sender.bash "%t" "%e" "%c" "%n" "%l" "%r" "%i""
