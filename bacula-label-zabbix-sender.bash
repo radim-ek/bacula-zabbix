@@ -3,9 +3,6 @@
 # Import configuration file
 source /opt/bacula/etc/bacula-zabbix.conf
 
-# Bacula hostname on Zabbix
-baculaHost="bacula-fd"
-
 # Executa o comando 'status dir' via bconsole e captura a saída
 output=$(echo "status dir" | bconsole)
 
