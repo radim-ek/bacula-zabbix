@@ -128,9 +128,12 @@ The file is setup to work with the example mail command from above. Change the M
 Note that if you edit the message via Baculum WEB(Prefered and no restart needed) you should use without "\":
   ```
   # Via WEB:
-  mailcommand = "/var/spool/bacula/bacula-sender.bash "%t" "%e" "%c" "%n" "%l" "%r" "%i""
+  mailcommand = /var/spool/bacula/bacula-sender.bash "%t" "%e" "%c" "%n" "%l" "%r" "%i"
   ```
-
+tip:
+ - you probably want bacula to send this "message" on All jobs.
+ - then check the `all` box in the `mail` Message option.
+ 
 and leave everything else the same.
 
 4. Now restart the Bacula Director service. In my case I used this command:
