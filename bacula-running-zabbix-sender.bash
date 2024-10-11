@@ -13,7 +13,7 @@ output=$(echo "status dir" | bconsole)
 running_jobs=$(echo "$output" | grep -c "is running")
 
 # Captura o horário atual (hora em formato de 24h)
-current_hour=$(date +"%H")
+current_hour=$(date +"%-H")
 
 # Sempre envia o número de jobs rodando para o Zabbix
 $zabbixSender -z $zabbixServer -c $zabbixAgentConfig -s "$baculaHost" -k "bacula.running.jobs" -o "$running_jobs"
