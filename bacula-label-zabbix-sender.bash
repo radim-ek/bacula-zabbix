@@ -7,7 +7,7 @@ source /opt/bacula/etc/bacula-zabbix.conf
 output=$(echo "status dir" | bconsole)
 
 # Conta o número de jobs que estão aguardando por mídia (label)
-label_jobs=$(echo "$output" | grep -c "waiting for media")
+label_jobs=$(echo "$output" | grep -E -c "waiting for media|Cannot find any appendable volumes|is waiting")
 
 # Envia o valor para o Zabbix via zabbix_sender
 $zabbixSender -z $zabbixServer -c $zabbixAgentConfig -s "$baculaHost" -k "bacula.label.jobs" -o "$label_jobs"
