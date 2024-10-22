@@ -7,12 +7,7 @@ source /opt/bacula/etc/bacula-zabbix.conf
 output=$(echo "status dir" | bconsole)
 
 # Conta o número de jobs que estão rodando (status Running)
-running_jobs=$(echo "$output" | grep -c "is running")
-
-# Se não houver nenhum job rodando, define o valor como 0
-if [[ -z "$running_jobs" ]]; then
-    running_jobs=0
-fi
+running_jobs=$(echo "$output" | grep -E -c "is running")
 
 # Captura o horário atual (hora em formato de 24h)
 current_hour=$(date +"%-H")
