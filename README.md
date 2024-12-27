@@ -1,3 +1,5 @@
+# FORKED from https://github.com/samuk10/bacula-zabbix only for archive!
+
 # Zabbix monitoring of Bacula's backup jobs and its processes
 
 This project is mainly composed by a bash script and a Zabbix template. The bash script reads values from Bacula Catalog and sends it to Zabbix Server. While the Zabbix template has items and other configurations that receive this values, start alerts and generate graphs and screens. This material was created using Bacula at 7.0.5 version and Zabbix at 2.4.5 version in a GNU/Linux CentOS 7 operational system.
